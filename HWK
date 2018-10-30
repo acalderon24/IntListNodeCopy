@@ -1,0 +1,154 @@
+
+
+import java.util.NoSuchElementException;
+
+public class IntListNode {
+	public int data;
+	public IntListNode next;
+	
+	public IntListNode(int d, IntListNode n) {
+		data = d;
+		next = n;
+	}
+	
+	public IntListNode(int d) {
+		this(d, null);
+	}
+	
+	public IntListNode() {}
+	
+	/**
+	 * Returns the number of times {@code target} appears in the list
+	 * @param first the first node in the list (or null if the list is empty)
+	 * @param target the data item to count
+	 * @return the number of times {@code target} appears in the list
+	 */
+	public static int count(IntListNode first, int target) {
+		IntListNode current = first; //start at beginning and name it current so no confusion
+		int count = 0; //int accumulator for addition
+		while(current != null) //while current node is not empty
+		{
+			if (current.data == target) //if current node your ins data == to target data
+				count ++;  //add 1 to the count accumulator
+			current = current.next; //keep moving through the list
+		}
+		return count; //when you reach the end of the list and your current node is null, return count of target
+
+	}
+
+	/**
+	 * Returns the data in position {@code index} in the list.  Note that the
+	 * first data item is in position 0.
+	 * @param first the first node in the list
+	 * @param index the index of the item to get from the list
+	 * @throws NoSuchElementException if the list doesn't have a 
+	 * position {@code index}
+	 * @return the data in position {@code index} in the list.
+	 */
+	public static int get(IntListNode first, int index) {
+		
+		
+		IntListNode current = first; //start at first node, name it current so no confusion
+		int count = 0; //count accumulator for index
+		while (current != null) //while (current is not null)
+		{
+			if (count == index) //since starting at first node if 0 == int index in parameter
+				return current.data; //return current node were ins data
+			count++; //if first one does not have the data add 1 to count
+			current = current.next; //go to the next node in the linked list until while loop condition no longer applies
+		}
+		
+		{throw new NoSuchElementException("The list does not have such position");}
+	}
+		
+	/**
+	 * Constructs a separate copy of a list.  Changes to the copy do not affect the original.
+	 * @param first the first node in the list to be copied
+	 * @return the first node of the copy
+	 */
+	public static IntListNode copy(IntListNode first) {
+		if (first == null) //if first node is null, print Nothing to copy
+			System.out.println("Nothing to copy");
+		
+		IntListNode current = first; //store first node in current variable
+		IntListNode copy = new IntListNode(); //create a new node named copy that is null
+		
+		while (current != null) //while current node, starting at first node, is not null
+		{
+			copy.data = current.data; //copy the data from the current node and put it in the new node named copy
+			current = current.next; //keep going to the next node until no longer meet the while condition
+			
+		}	
+		return copy; //return the copy IntListNode
+	}
+
+	/**
+	 * Constructs a string representation of the list.  The string is a comma
+	 * separated listing of the numbers in the same order they appear in the list.
+	 * @param first the first node in the list
+	 * @return a string representation of the list.
+	 */
+	public static String convertToString(IntListNode first) {
+		String newString = ""; //creates an empty string
+		if (first == null) //checks to make sure first IntListNode is not null
+			return newString; //if so returns empty string
+		IntListNode current = first; //pointer that starts at the first node of the linked list
+		while (current != null)
+		{
+			newString += Integer.toString(current.data);
+			if (current.next != null)
+			{
+				newString += ","; //add a comma after current.data
+			}
+			current = current.next;
+		}
+		
+		return newString;
+	}
+	
+	/**
+	 * Deletes the first occurrence of {@code target} from the list if it is present
+	 * @param first the first node of the list
+	 * @param target the item to be deleted
+	 * @return the first node of the resulting list or null if the result is the empty list
+	 */
+	public static IntListNode delete(IntListNode first, int target) {
+		/*IntListNode newHead = new IntListNode();  //wrong
+		if (first == null)
+			return null;
+		if (first.data == target) {
+			newHead = first.next;
+			return first;
+		}
+		IntListNode current = first;
+		while(current != null)
+		{
+			if (current.data == target) //if the current node your checking has the target data
+			{
+				current.next = current.next.next; //
+				current = current.next;			
+			}
+		}
+		return current;
+		
+	}*/
+		IntListNode current = first;
+		IntListNode placeholder = null;
+		while(current != null)
+		{
+			if(current.data == target) 
+			{
+				if(placeholder == null) {
+				first = first.next;
+			}
+		else {
+			placeholder.next = current.next;
+		}
+			break;
+		}
+		placeholder = current;
+		current = current.next;
+	}
+	return first;
+}
+}
